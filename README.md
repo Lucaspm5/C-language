@@ -1,2 +1,2 @@
 # C
-Studies in c
+This file is intended for the study of the C language
