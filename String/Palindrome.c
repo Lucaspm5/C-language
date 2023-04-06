@@ -5,7 +5,9 @@ int main(int argc, char **argv){
     char str[100];
 
     fgets(str, 100, stdin);
-    str[strcspn(str, "\n")] = '\0'; // remova o caractere \n, se presente
+    
+    str[strcspn(str, "\n")] = '\0';
+ 
     int size = strlen(str);
     int auxiliary = 1;
 
