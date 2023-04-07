@@ -1,8 +1,7 @@
 #include <stdio.h>
 
-int main() {
+int main(int argc, char **argv) {
     int casos;
-    printf("Digite o número de linhas: ");
     scanf("%d", &casos);
 
     for(int i = 0; i < casos; i++) {
