@@ -15,13 +15,21 @@ int numero_usuarios = 0;
 
 void cadastrar_aluno()
 {
-    for(int i = 0; i < 3; i++)
+    int valido = 1;
+    int validacao;
+
+    for(int i = 0; i < MAX_USUARIOS && valido; i++)
     {
         printf("Informe o nome do aluno(a):\n");
         scanf("%s", lista_usuarios[numero_usuarios].nome);
 
         printf("Informe a matricula do aluno(a):\n");
         scanf("%s", lista_usuarios[numero_usuarios].matricula);
+
+        printf("Deseja finalizar o cadastro 1-sim 2-nao:");
+        scanf("%d", &validacao);
+
+        if(validacao == 1) valido = 0;
 
         numero_usuarios++;
     }
