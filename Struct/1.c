@@ -1,34 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <time.h>
 
-int main() 
+struct ponto{
+    float x, y;
+};
+
+void imprimir(struct ponto *p)
 {
-    int size;
-    scanf("%d", &size);
+    for (int i = 0;i < 10;i++)
+        printf("%.2f - %.2f\n",p[i].x,p[i].y);
+}
 
-    int ***matriz = (int ***)calloc(size, sizeof(int **));
+int main()
+{
+    struct ponto *p = malloc(10 * sizeof(struct ponto));
 
-    for (int i = 0; i < size; i++) {
-        *(matriz + i) = (int **)calloc(size, sizeof(int *));
-        for (int j = 0; j < size; j++) {
-            *(*(matriz + i) + j) = (int *)calloc(size, sizeof(int));
-        }
+    srand ((unsigned)time(NULL));
+
+    for (int i = 0;i < 10;i++)
+    {
+        p[i].x = rand() % 10;
+        p[i].y = rand() % 100;
     }
+    imprimir(p);
 
-    double raio = size / 2.0;
-
-
-    if(matriz != NULL) printf("O raio da maior esfera inscrita na matriz é: %.2f\n", raio);
-    else
-        printf("Ocorreu algum erro\n");
-
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++)
-            free(*(*(matriz + i) + j));
-        free(*(matriz + i));
-    }
-    free(matriz);
+    free(p);
 
     return 0;
 }
