@@ -1,83 +1,69 @@
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NUM_CARROS 10
-
-struct carro 
+#define AUX1(x) scanf("%d", &x)
+#define AUX2(x) scanf("%lf", &x)
+// Mini sistema de banco
+struct Banco
 {
-    int x;
-    int y;
+    double saldo_inicial;
+    double deposito;
+    double sacar;
+    double saldo;
 };
-
-void sortear_carros(struct carro carros[], int M, int N) {
-    int i;
-    int min_dim = M < N ? M : N;
-    for (i = 0; i < NUM_CARROS; i++) {
-        do {
-            carros[i].x = rand() % N;
-        } while (carros[i].x < min_dim / 2 || carros[i].x > N - min_dim / 2);
-
-        do {
-            carros[i].y = rand() % M;
-        } while (carros[i].y < min_dim / 2 || carros[i].y > M - min_dim / 2);
-    }
+//-----------------------------------------------------------
+void depositar(struct Banco *acesso, int *ptr)
+{
+    acesso->saldo = acesso->saldo + acesso->deposito;
+    *ptr = 2;
 }
+//-----------------------------------------------------------
+void sacar(struct Banco *acesso, int *ptr)
+{
+    acesso->saldo = acesso->saldo - acesso->sacar;
+    *ptr = 1;
+}
+//-----------------------------------------------------------
+void imprimir_saldo(struct Banco *imprimir, int *ptr)
+{
+    if (*ptr == 1) printf("Valor bancario apos o saque: %.2lf\n", imprimir->saldo);
+    if (*ptr == 2) printf("Valor bancario apos o deposito: %.2lf\n", imprimir->saldo);
+    //else if (*ptr == 3) printf("Saldo final: %.2lf\n", imprimir->saldo_inicial);
+}
+//-----------------------------------------------------------
+int main()
+{
+    struct Banco *p = malloc(sizeof(struct Banco));
 
-void imprimir_tabuleiro(struct carro carros[], int M, int N) {
-    int i, j;
-    for (i = 0; i < M; i++) {
-        for (j = 0; j < N; j++) {
-            int k;
-            int tem_carro = 0;
-            for (k = 0; k < NUM_CARROS; k++) {
-                if (carros[k].x == j && carros[k].y == i) {
-                    tem_carro = 1;
-                    break;
-                }
-            }
-            if (tem_carro) {
-                printf("%d ", k + 1);
-            } else {
-                printf("- ");
-            }
+    int validar = 0;
+    int op;
+
+    printf("Informe seu saldo bancario:\n");
+    AUX2(p->saldo_inicial);
+
+    p->saldo = p->saldo_inicial;
+
+    while(1 && op != 3)
+    {
+        printf("Voce deseja (1 - Depositar 2 - Sacar 3 - Finalizar)\n");
+        AUX1(op);
+
+        switch(op)
+        {
+            case 1:
+                printf("Quanto voce deseja depositar:\n");
+                AUX2(p->deposito);
+                depositar(p, &validar);
+                break;
+            case 2:
+                printf("Quanto você deseja sacar:\n");
+                AUX2(p->sacar);
+                sacar(p, &validar);
+                break;
         }
-        printf("\n");
-    }
-}
 
-void testar_colisoes(struct carro carros[]) {
-    int i, j;
-    int colisoes = 0;
-    for (i = 0; i < NUM_CARROS; i++) {
-        for (j = i + 1; j < NUM_CARROS; j++) {
-            if (carros[i].x == carros[j].x && carros[i].y == carros[j].y) {
-                colisoes++;
-                printf("Há uma colisão entre os carros %d e %d.\n", i + 1, j + 1);
-            }
-        }
-    }
-    printf("O número total de colisões é %d.\n", colisoes);
-}
-
-
-
-int main() {
-    struct carro carros[NUM_CARROS];
-    int M = 10;
-    int N = 20;
-    char continuar;
-
-    srand(time(NULL));
-
-    continuar = 's';
-    while (continuar == 's') {
-        sortear_carros(carros, M, N);
-        testar_colisoes(carros);
-        imprimir_tabuleiro(carros,M, N);
-        printf("Você quer continuar? Digite 's' para sim ou 'n' para não.\n");
-        scanf(" %c", &continuar);
+        imprimir_saldo(p, &validar);
     }
 
-    return 0;
+    free(p);
 }
