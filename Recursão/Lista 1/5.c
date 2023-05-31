@@ -2,9 +2,7 @@
 
 int somar(int n)
 {
-    if (n < 1) return 0;
-    
-    return n + somar(n - 1);
+    return (n < 1) ? 0 : n + somar(n-1);
 }
 
 int main()
