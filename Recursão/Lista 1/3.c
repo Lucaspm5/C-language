@@ -2,13 +2,7 @@
 
 int inverter(int n)
 {
-    if (n <= 9) return n;
-
-    else
-    {
-        printf("%d", n % 10); 
-        inverter(n / 10);
-    }
+    return (n <= 9) ? n : (printf("%d", n % 10), inverter (n / 10));
 }
 
 int main(){
