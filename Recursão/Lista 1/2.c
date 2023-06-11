@@ -1,36 +1,26 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
-// Fibonacci com programação dinâmica
-#define MAX 100
-#define validar -1
-
-int sequencia[MAX];
-
-void inicializar()
-{
-    for (int i = 0;i < MAX;i++) sequencia[i] = validar;
-}
-
-int fibonacci_sequence(int n)
-{
-    if (sequencia[n] == validar)
+int fibonacci(int n, int* auxiliary, bool* calculeted) {
+    if (!calculeted[n])
     {
-        if (n <= 1) return sequencia[n] = n;
-        else
-            sequencia[n] = fibonacci_sequence(n - 1) + fibonacci_sequence(n - 2);
+        if (n <= 1) auxiliary[n] = n;
+        else {
+            auxiliary[n] = fibonacci(n-1, auxiliary, calculeted) + fibonacci(n-2, auxiliary, calculeted);
+        }
     }
-    return sequencia[n];
+    calculeted[n] = true;
+    return auxiliary[n];
 }
 
-int main()
-{
-    int k;
+int main() {
+    int n = 5;
+    int auxiliary[n+1];
+    bool calculeted[n+1];
+    memset(calculeted, false, sizeof(calculeted));
 
-    scanf("%d", &k);
-
-    inicializar();
-
-    printf("%d\n", fibonacci_sequence(k));
+    printf("%d\n", fibonacci(n-1, auxiliary, calculeted));
 
     return 0;
 }
