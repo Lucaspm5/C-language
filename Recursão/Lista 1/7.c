@@ -1,29 +1,12 @@
 #include <stdio.h>
 
-void trocar(int *a, int *b)
-{
-    int aux = *a;
-    *a = *b;
-    *b = aux;
+void inverter(int* arr, int size) {
+    return (size < 1) ? 1 : ( printf("%d", arr[size-1]), inverter(arr, size - 1));
 }
 
-void inverter(int *inicio, int *fim)
-{
-    return (inicio >= fim) ? 0 : (trocar(inicio, fim), inverter(inicio + 1, fim - 1));
-}
-int main()
-{
-    int size;
+int main() {
+    int arr[] = {5, 4, 3, 2, 1};
 
-    scanf("%d", &size);
-
-    int arr[size];
-
-    for (int i = 0;i < size;i++) scanf("%d", &arr[i]);
-
-    inverter(arr, arr + size - 1);
-
-    for (int i = 0;i < size;i++) printf("%d ",arr[i]);
-
+    inverter(arr, 5);
     return 0;
 }
